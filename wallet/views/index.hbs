@@ -1,0 +1,116 @@
+<div style="position: relative;width:100%;border:2px solid green;">
+	<h1 style="text-align: center;">W A L L E T</h1>
+</div>
+<div style="position: relative;width:100%;border:2px solid green;">
+    <h1>
+        <input type="text" id="import_key" value="Private Key">
+        <!-- <button type="button" onclick="my_func();">Test</button> -->
+        <button type="button" onclick="import_pk();">Import PK</button>
+    </h1>
+    <h1>
+        <button type="button" onclick="create_wallet();">Create Wallet</button>
+    </h1>
+    <h1>
+        <input type="text" id="import_address" value="Address">
+        <button type="button" onclick="check_balance_by_address();">Ballance by Address</button>
+    </h1>
+    <h1>
+        <button type="button" onclick="check_balance();">Ballance</button>
+    </h1>
+    <h1>
+        <button type="button" onclick="current_wallet();">Make this current</button>
+    </h1>
+    <h1>
+        <input type="text" id="import_ether" value="ethers">
+        <input type="text" id="import_receiver" value="Address">
+        <button type="button" onclick="send();">Send</button>
+    </h1>
+</div>
+<div style="position: relative;width:100%;border:2px solid green;">
+    <h1 style="text-align: center;" id="result">Test</h1>
+</div>
+<script type="text/javascript">
+
+    function import_pk() {
+    	var input = document.getElementById('import_key');
+    	var result = document.getElementById('result');
+
+    	$.get('/import_pk', {
+    		text: input.value,
+    		test: 42,
+    	}, function(res) {
+    		console.log(res);
+    		result.innerHTML = "Public Key: " + res.pubkey + "<br>Address: " + res.address;
+    	});
+    }
+
+    function create_wallet() {
+        var input = document.getElementById('');
+    	var result = document.getElementById('result');
+
+    	$.get('/create_wallet', {}, function(res) {
+    		console.log(res);
+    		result.innerHTML = "Public Key: " + res.pubkey + "<br>Address: " + res.address;;
+    	});
+    }
+
+    function check_balance_by_address() {
+        var input = document.getElementById('import_address');
+        var result = document.getElementById('result');
+
+        $.get('/check_balance_by_address', {
+            address: input.value,
+        }, function(res) {
+            console.log(res);
+            result.innerHTML = res;
+        });
+    }
+
+    function check_balance() {
+        var result = document.getElementById('result');
+
+        $.get('/check_balance', function(res) {
+            console.log(res);
+            result.innerHTML = res;
+        });
+    }
+
+    function current_wallet() {
+        var result = document.getElementById('result');
+
+        $.get('/current_wallet', function(res) {
+            console.log(res);
+            result.innerHTML = res;
+        });
+    }
+
+    function send() {
+        var ether = document.getElementById('import_ether');
+        var receiver = document.getElementById('import_receiver');
+        var result = document.getElementById('result');
+
+        $.get('/send', {
+            ether: ether.value,
+            receiver: receiver.value,
+        }, function(res) {
+            console.log(res);
+            result.innerHTML = res;
+        });
+    }
+
+</script>
+
+
+
+
+
+<!-- !!!!!!!!!!!!!!!!!!!warning: CRLF will be replaced by LF in wallet/node_modules/number-to-bn/dist/number-to-bn.js. -->
+
+
+
+
+<!-- This exposes the library as a global variable: ethers -->
+<!-- <script src="https://cdn.ethers.io/scripts/ethers-v4.min.js"
+        charset="utf-8"
+        type="text/javascript">
+</script> -->
